@@ -17,6 +17,25 @@ const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
+  pluginOptions: {
+    electronBuilder: {
+      // nodeIntegration: true,
+      builderOptions: {
+        // config Electron Builder
+        // https://www.electron.build/configuration/configuration
+      },
+      mainProcessFile: 'src/main-electron.js',
+      mainProcessWatch: [],
+      // eslint-disable-next-line no-unused-vars
+      chainWebpackMainProcess: (config) => {
+        // Chain webpack config for electron main process only
+      },
+      // eslint-disable-next-line no-unused-vars
+      chainWebpackRendererProcess: (config) => {
+        // Chain webpack config for electron renderer process only (won't be applied to web builds)
+      }
+    }
+  },
   /**
    * You will need to set publicPath if you plan to deploy your site under a sub path,
    * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
@@ -88,7 +107,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()
